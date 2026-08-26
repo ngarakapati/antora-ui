@@ -863,23 +863,23 @@ body.theme-cloud {
   margin: 0.75rem 0 1rem;
 }
 
-/* ---- Changelog timeline ---- */
+/* ---- Release notes timeline ---- */
 
-.theme-cloud.changelog .doc .sect1 {
+.theme-cloud.release-notes .doc .sect1 {
   display: grid;
   grid-template-columns: 8.5rem 1fr;
   column-gap: 2rem;
 }
 
-.theme-cloud.changelog .doc #preamble + .sect1 {
+.theme-cloud.release-notes .doc #preamble + .sect1 {
   margin-top: 2.5rem;
 }
 
-.theme-cloud.changelog .doc .sect1 + .sect1 {
+.theme-cloud.release-notes .doc .sect1 + .sect1 {
   margin-top: 0;
 }
 
-.theme-cloud.changelog .doc .sect1 > h2 {
+.theme-cloud.release-notes .doc .sect1 > h2 {
   grid-column: 1;
   position: sticky;
   top: 5.5rem;
@@ -894,19 +894,19 @@ body.theme-cloud {
   white-space: nowrap;
 }
 
-.theme-cloud.changelog .doc .sect1 > .sectionbody {
+.theme-cloud.release-notes .doc .sect1 > .sectionbody {
   grid-column: 2;
   position: relative;
   border-left: 1px solid var(--panel-border-color);
   padding: 0 0 2.75rem 2rem;
 }
 
-.theme-cloud.changelog .doc .sect1:last-child > .sectionbody {
+.theme-cloud.release-notes .doc .sect1:last-child > .sectionbody {
   border-left-color: transparent;
   padding-bottom: 0;
 }
 
-.theme-cloud.changelog .doc .sect1 > .sectionbody::before {
+.theme-cloud.release-notes .doc .sect1 > .sectionbody::before {
   content: '';
   position: absolute;
   left: -0.3125rem;
@@ -918,38 +918,38 @@ body.theme-cloud {
   box-shadow: 0 0 0 4px var(--body-background);
 }
 
-.theme-cloud.changelog .doc .sect1 > .sectionbody > .sect2:first-child > h3 {
+.theme-cloud.release-notes .doc .sect1 > .sectionbody > .sect2:first-child > h3 {
   margin-top: 0;
 }
 
-.theme-cloud.changelog .doc .sect1 > .sectionbody > .sect2 + .sect2 {
+.theme-cloud.release-notes .doc .sect1 > .sectionbody > .sect2 + .sect2 {
   margin-top: 1.75rem;
 }
 
-.theme-cloud.changelog .doc .sect1 h3 {
+.theme-cloud.release-notes .doc .sect1 h3 {
   font-size: calc(18 / var(--rem-base) * 1rem);
 }
 
 @media screen and (max-width: 1023px) {
-  .theme-cloud.changelog .doc .sect1 {
+  .theme-cloud.release-notes .doc .sect1 {
     grid-template-columns: 1fr;
     column-gap: 0;
   }
 
-  .theme-cloud.changelog .doc .sect1 > h2 {
+  .theme-cloud.release-notes .doc .sect1 > h2 {
     grid-column: 1;
     position: static;
     padding-bottom: 0.5rem;
   }
 
-  .theme-cloud.changelog .doc .sect1 > .sectionbody {
+  .theme-cloud.release-notes .doc .sect1 > .sectionbody {
     grid-column: 1;
     border-left: 0;
     padding-left: 0;
     padding-bottom: 2rem;
   }
 
-  .theme-cloud.changelog .doc .sect1 > .sectionbody::before {
+  .theme-cloud.release-notes .doc .sect1 > .sectionbody::before {
     content: none;
   }
 }
