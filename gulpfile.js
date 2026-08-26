@@ -6,6 +6,10 @@ const exportTasks = require('./gulp.d/lib/export-tasks')
 const log = require('fancy-log')
 
 const bundleName = 'ui'
+// Published bundle filename. Defaults to the shared `ui-bundle.zip`, but CI can
+// set UI_BUNDLE_FILENAME (e.g. `ui-bundle-cloud.zip`) to emit a separately
+// named bundle without overwriting the shared one that other docs consume.
+const bundleFileName = process.env.UI_BUNDLE_FILENAME || `${bundleName}-bundle.zip`
 const buildDir = 'build'
 const previewSrcDir = 'preview-src'
 const previewDestDir = 'public'
@@ -72,7 +76,7 @@ const bundlePackTask = createTask({
   call: task.pack(
     destDir,
     buildDir,
-    bundleName,
+    bundleFileName,
     (bundlePath) => !process.env.CI && log(`Antora option: --ui-bundle-url=${bundlePath}`)
   ),
 })

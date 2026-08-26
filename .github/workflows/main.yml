@@ -35,14 +35,13 @@ jobs:
       - name: Lint UI sources
         run: npx gulp lint
 
-      # gulp bundle always emits build/ui-bundle.zip from src/. Since the
-      # cloud theme now lives in src/ on main, that output IS the cloud-themed
-      # bundle, which we publish as ui-bundle-cloud.zip. We intentionally do NOT
-      # commit ui-bundle.zip so other product docs keep the shared default.
+      # The cloud/Savanna theme lives in src/ on main. UI_BUNDLE_FILENAME makes
+      # gulp emit the bundle directly as build/ui-bundle-cloud.zip, so we never
+      # touch the shared build/ui-bundle.zip that other product docs consume.
       - name: Build cloud UI bundle
-        run: |
-          npx gulp bundle
-          cp build/ui-bundle.zip build/ui-bundle-cloud.zip
+        env:
+          UI_BUNDLE_FILENAME: ui-bundle-cloud.zip
+        run: npx gulp bundle
 
       - name: Commit refreshed cloud bundle
         if: github.event_name != 'pull_request'
@@ -52,8 +51,8 @@ jobs:
 
           # ISOLATION GUARANTEE: other products consume the shared
           # build/ui-bundle.zip, which must NEVER carry the cloud theme.
-          # gulp rebuilt a themed ui-bundle.zip in the working tree, so restore
-          # the committed (neutral) version before staging anything.
+          # `gulp bundle` cleans build/ before packing, so restore the committed
+          # (neutral) ui-bundle.zip that the clean step removed.
           git checkout -- build/ui-bundle.zip
 
           # Stage ONLY the cloud bundle, by explicit path.
