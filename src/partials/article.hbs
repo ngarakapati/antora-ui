@@ -1,6 +1,13 @@
 <article class="doc">
 {{#with page.title}}
+{{#if (is-cloud-theme @root.page)}}
+<div class="page-header">
 <h1 class="page">{{{this}}}</h1>
+{{> page-actions}}
+</div>
+{{else}}
+<h1 class="page">{{{this}}}</h1>
+{{/if}}
 {{/with}}
 {{{page.contents}}}
 {{> pagination}}

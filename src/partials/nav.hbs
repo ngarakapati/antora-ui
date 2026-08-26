@@ -2,7 +2,11 @@
   <aside class="nav">
     <div class="panels">
 {{> nav-menu}}
+{{!-- Cross-product switcher. Redundant with the header Products menu; hide for
+     Savanna / Classic. Other products keep the explore drawer. --}}
+{{#unless (is-cloud-theme page)}}
 {{> nav-explore}}
+{{/unless}}
     </div>
   </aside>
 </div>

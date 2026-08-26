@@ -23,7 +23,10 @@
   }
 
   find(menuPanel, '.nav-item-toggle').forEach(function (btn) {
-    var li = btn.parentElement
+    // closest() resolves the nav-item whether or not the theme-cloud .nav-row
+    // wrapper sits between the toggle and its nav-item (identical result for
+    // the default UI, where the toggle is a direct child of the nav-item).
+    var li = btn.closest('.nav-item')
     btn.addEventListener('click', toggleActive.bind(li))
     var navItemSpan = findPreviousElement(btn, '.nav-text')
     if (navItemSpan) {
@@ -59,7 +62,7 @@
     }
     var navItem
     if (navLink) {
-      navItem = navLink.parentNode
+      navItem = navLink.closest('.nav-item')
     } else if (originalPageItem) {
       navLink = (navItem = originalPageItem).querySelector('.nav-link')
     } else {

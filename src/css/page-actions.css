@@ -1,0 +1,189 @@
+/* Cloud/Savanna page-actions. Tokens live on html.theme-cloud in theme-cloud.css. */
+.theme-cloud .page-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: none;
+  /* nudge down so the control optically aligns with the first line of the page title */
+  margin-top: 0.35rem;
+}
+
+.theme-cloud .page-actions-control {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--panel-border-color);
+  border-radius: var(--page-actions-radius);
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+.theme-cloud .page-actions-copy,
+.theme-cloud .page-actions-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--doc-font-color);
+  font: inherit;
+  font-size: var(--page-actions-font-size);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.theme-cloud .page-actions-copy {
+  padding: 0.45rem 0.7rem;
+}
+
+.theme-cloud .page-actions-toggle {
+  padding: 0.45rem 0.5rem;
+  border-left: 1px solid var(--panel-border-color);
+}
+
+.theme-cloud .page-actions-copy:hover,
+.theme-cloud .page-actions-toggle:hover,
+.theme-cloud .page-actions-copy:focus-visible,
+.theme-cloud .page-actions-toggle:focus-visible,
+.theme-cloud .page-actions.is-active .page-actions-toggle {
+  background: var(--color-smoke-50);
+  outline: none;
+}
+
+.theme-cloud .page-actions-icon,
+.theme-cloud .page-actions-chevron {
+  width: var(--page-actions-icon-size);
+  height: var(--page-actions-icon-size);
+  flex: none;
+}
+
+.theme-cloud .page-actions-chevron {
+  transition: transform 0.15s ease;
+}
+
+.theme-cloud .page-actions.is-active .page-actions-chevron {
+  transform: rotate(180deg);
+}
+
+.theme-cloud .page-actions-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: var(--z-index-nav);
+  min-width: var(--page-actions-menu-width);
+  padding: 0.4rem;
+  border: 1px solid var(--panel-border-color);
+  border-radius: 0.875rem;
+  background: var(--color-white);
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-cloud .page-actions-menu[hidden] {
+  display: none;
+}
+
+.theme-cloud .page-actions-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border: 0;
+  border-radius: 0.625rem;
+  background: transparent;
+  color: var(--doc-font-color);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* the control lives inside article.doc, so opt out of the doc link styling */
+.theme-cloud .doc .page-actions-item,
+.theme-cloud .doc .page-actions-item:hover {
+  color: var(--doc-font-color);
+  text-decoration: none;
+}
+
+.theme-cloud .page-actions-item:hover,
+.theme-cloud .page-actions-item:focus-visible {
+  background: var(--color-smoke-50);
+  outline: none;
+}
+
+.theme-cloud .page-actions-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--page-actions-chip-size);
+  height: var(--page-actions-chip-size);
+  border: 1px solid var(--panel-border-color);
+  border-radius: var(--page-actions-radius);
+  color: var(--color-gray-70);
+  background: var(--color-white);
+}
+
+.theme-cloud .page-actions-chip svg {
+  width: var(--page-actions-icon-size);
+  height: var(--page-actions-icon-size);
+}
+
+.theme-cloud .page-actions-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.theme-cloud .page-actions-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: var(--page-actions-font-size);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.theme-cloud .page-actions-external {
+  /* display:block kills the inline-svg baseline gap that made ↗ look like a superscript */
+  display: block;
+  width: 0.75em;
+  height: 0.75em;
+  flex: none;
+  overflow: visible;
+  color: var(--color-gray-50);
+  /* ↗ is optically top-heavy; drop it onto the title's cap height */
+  margin-block-start: 0.08em;
+}
+
+.theme-cloud .page-actions-hint {
+  font-size: var(--page-actions-hint-font-size);
+  color: var(--caption-font-color);
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 767.5px) {
+  .theme-cloud .page-actions-menu {
+    min-width: var(--page-actions-menu-width--mobile);
+  }
+
+  .theme-cloud .page-actions-copy-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .theme-cloud .page-actions-copy {
+    padding: 0.45rem;
+  }
+}

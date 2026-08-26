@@ -3,6 +3,7 @@
   {{#each navigation}}
   <li class="nav-item{{#if (eq ./url @root.page.url)}} is-current-page{{/if}}" data-depth="{{or ../level 0}}">
     {{#if ./content}}
+    {{#if (is-cloud-theme @root.page)}}<div class="nav-row">{{/if}}
     {{#if ./url}}
     <a class="nav-link" href="
       {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
@@ -17,6 +18,7 @@
 </svg> 
     </button>
     {{/if}}
+    {{#if (is-cloud-theme @root.page)}}</div>{{/if}}
     {{/if}}
 {{> nav-tree navigation=./items level=(increment ../level)}}
   </li>
