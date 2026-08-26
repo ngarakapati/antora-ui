@@ -1,11 +1,9 @@
 {{#if navigation.length}}
 <ul class="nav-list">
   {{#each navigation}}
-  {{! the open state is rendered here rather than left to nav.js, so the tree
-      does not visibly expand and spin its chevrons after the first paint }}
-  <li class="nav-item{{#if (eq ./url @root.page.url)}} is-current-page is-active{{/if}}{{#if (has-current-page ./items @root.page.url)}} is-active is-current-path{{/if}}" data-depth="{{or ../level 0}}"{{#if (and ./content ./items.length)}} data-nav-key="{{#if ./url}}{{./url}}{{else}}{{or ../level 0}}:{{detag ./content}}{{/if}}"{{/if}}>
+  <li class="nav-item{{#if (eq ./url @root.page.url)}} is-current-page{{/if}}" data-depth="{{or ../level 0}}">
     {{#if ./content}}
-    <div class="nav-row">
+    {{#if (or (eq @root.page.component.name 'savanna') (eq @root.page.component.name 'cloud'))}}<div class="nav-row">{{/if}}
     {{#if ./url}}
     <a class="nav-link" href="
       {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
@@ -20,7 +18,7 @@
 </svg> 
     </button>
     {{/if}}
-    </div>
+    {{#if (or (eq @root.page.component.name 'savanna') (eq @root.page.component.name 'cloud'))}}</div>{{/if}}
     {{/if}}
 {{> nav-tree navigation=./items level=(increment ../level)}}
   </li>

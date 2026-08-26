@@ -22,9 +22,10 @@
     menuPanel.scrollTop = 0
   }
 
-  storeOpenSections()
-
   find(menuPanel, '.nav-item-toggle').forEach(function (btn) {
+    // closest() resolves the nav-item whether or not the theme-cloud .nav-row
+    // wrapper sits between the toggle and its nav-item (identical result for
+    // the default UI, where the toggle is a direct child of the nav-item).
     var li = btn.closest('.nav-item')
     btn.addEventListener('click', toggleActive.bind(li))
     var navItemSpan = findPreviousElement(btn, '.nav-text')
@@ -102,22 +103,6 @@
       var overflowY = (rect.bottom - menuPanelRect.top - menuPanelRect.height + padding).toFixed()
       if (overflowY > 0) menuPanel.scrollTop += Math.min((rect.top - menuPanelRect.top - padding).toFixed(), overflowY)
     }
-    storeOpenSections()
-  }
-
-  // a page click reloads the document, so the open sections only survive if
-  // they are written down; the inline script in nav.hbs reads them back
-  function storeOpenSections () {
-    try {
-      window.sessionStorage.setItem(
-        'nav-open-sections',
-        JSON.stringify(
-          find(menuPanel, '.nav-item.is-active[data-nav-key]').map(function (el) {
-            return el.getAttribute('data-nav-key')
-          })
-        )
-      )
-    } catch (e) {}
   }
 
   function showNav (e) {

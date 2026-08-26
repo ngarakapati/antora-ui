@@ -1,79 +1,31 @@
 name: CI
 
-# Rebuilds the cloud/Savanna UI bundle from source and triggers the docs site
-# build. On every push to main we run the gulp bundle, refresh
-# build/ui-bundle-cloud.zip (the bundle cloud-docs / Savanna + Cloud Classic
-# consume), commit it back, and ping the Netlify build hook so the docs site
-# rebuilds with the latest theme.
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Needed so the workflow can commit the rebuilt bundle back to main.
-permissions:
-  contents: write
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-
-      - name: Lint UI sources
-        run: npx gulp lint
-
-      # The cloud/Savanna theme lives in src/ on main. UI_BUNDLE_FILENAME makes
-      # gulp emit the bundle directly as build/ui-bundle-cloud.zip, so we never
-      # touch the shared build/ui-bundle.zip that other product docs consume.
-      - name: Build cloud UI bundle
-        env:
-          UI_BUNDLE_FILENAME: ui-bundle-cloud.zip
-        run: npx gulp bundle
-
-      - name: Commit refreshed cloud bundle
-        if: github.event_name != 'pull_request'
+      # Runs a set of commands using the runners shell
+      - name: Make curl call to build hook
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # ISOLATION GUARANTEE: other products consume the shared
-          # build/ui-bundle.zip, which must NEVER carry the cloud theme.
-          # `gulp bundle` cleans build/ before packing, so restore the committed
-          # (neutral) ui-bundle.zip that the clean step removed.
-          git checkout -- build/ui-bundle.zip
-
-          # Stage ONLY the cloud bundle, by explicit path.
-          git add --force build/ui-bundle-cloud.zip
-
-          # Tripwire: fail loudly if the shared bundle somehow got staged, so a
-          # future edit to this workflow can never leak the cloud theme.
-          if ! git diff --cached --quiet -- build/ui-bundle.zip; then
-            echo "ERROR: build/ui-bundle.zip changed; refusing to publish the cloud theme to the shared bundle." >&2
-            exit 1
-          fi
-
-          if git diff --cached --quiet; then
-            echo "Cloud bundle unchanged; nothing to commit."
-          else
-            git commit -m "build(ui): rebuild cloud UI bundle from source [skip ci]"
-            git push origin HEAD:main
-          fi
-
-      - name: Trigger Netlify build hook
-        if: github.event_name != 'pull_request'
-        run: |
-          echo "Making curl call to Netlify build hook"
-          curl -X POST -d '{}' "${{ secrets.BUILD_HOOK }}"
+          echo Making curl call to Netlify build hook
+          curl -X POST -d '{}' ${{ secrets.BUILD_HOOK }}

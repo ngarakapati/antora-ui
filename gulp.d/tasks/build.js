@@ -53,7 +53,7 @@ module.exports = (src, dest, preview) => () => {
         url: copyFont,
       },
     ]),
-    postcssVar({ preserve: preview }),
+    postcssVar({ preserve: true }),
     preview ? postcssCalc : () => {},
     autoprefixer,
     preview

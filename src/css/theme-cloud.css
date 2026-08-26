@@ -5,10 +5,52 @@
  */
 
 html.theme-cloud {
-  /* Set explicitly: the CSS pipeline inlines var(--body-font-size) on html. */
   font-size: 0.9em; /* ~14.4px, matches viewing the 16px base at 90% zoom */
   --body-font-size: 0.9em;
   --body-font-size--desktop: 0.9em;
+
+  /* Cloud/Savanna design tokens. These previously lived in the shared :root
+     (vars.css), which leaked the theme to every product. They now live here,
+     scoped to .theme-cloud, and resolve at runtime (postcss preserves vars).
+     Other components keep the neutral :root values. */
+  --rem-base: 16;
+  --body-line-height: 1.65;
+  --body-font-family: "Inter Variable", Arial, sans-serif;
+  --heading-font-family: "Outfit Variable", var(--body-font-family);
+  --monospace-font-family: "JetBrains Mono", ui-monospace, monospace;
+  --body-font-weight-bold: 600;
+  /* text scale: headings -> body -> muted -> subtle */
+  --color-text-strong: #181818;
+  --color-text: #383838;
+  --color-text-muted: #575858;
+  --color-text-subtle: #8b8c8c;
+  --body-font-color: var(--color-text);
+  /* nav */
+  --nav-line-height: 1.5;
+  --nav-heading-font-color: var(--color-jet-80);
+  --nav-item-font-color: var(--color-jet-50);
+  --nav-item-radius: 0.5rem;
+  /* doc */
+  --doc-font-color: var(--color-text);
+  --doc-font-size--desktop: 1rem;
+  --doc-line-height: 1.65;
+  --heading-font-color: var(--color-text-strong);
+  --heading-font-weight: 600;
+  --alt-heading-font-weight: 600;
+  --abstract-font-color: var(--color-text);
+  --caption-font-color: var(--color-text-muted);
+  --pre-annotation-font-color: var(--color-text-subtle);
+  --quote-font-color: var(--color-text-muted);
+  --quote-attribution-font-color: var(--color-text-subtle);
+  --toc-line-height: 1.5;
+  /* page actions */
+  --page-actions-font-size: calc(14 / var(--rem-base) * 1rem);
+  --page-actions-hint-font-size: calc(13 / var(--rem-base) * 1rem);
+  --page-actions-icon-size: calc(16 / var(--rem-base) * 1rem);
+  --page-actions-chip-size: calc(32 / var(--rem-base) * 1rem);
+  --page-actions-menu-width: calc(320 / var(--rem-base) * 1rem);
+  --page-actions-menu-width--mobile: calc(290 / var(--rem-base) * 1rem);
+  --page-actions-radius: 0.5rem;
   /* Keep shared site chrome (top nav) at the original 16px rem base so Savanna
      and Classic match every other product header. Content below still scales.
      The concrete offsets live below: the CSS pipeline inlines var() from :root,
@@ -110,6 +152,285 @@ body.theme-cloud {
 
 .theme-cloud .legal {
   padding-top: calc(1rem / 0.9);
+}
+
+/* ---- Navigation tree (scoped; the shared nav.css stays neutral) ----
+   These mirror the cloud nav look and rely on the .nav-row wrapper that
+   nav-tree.hbs only emits for savanna/cloud. */
+.theme-cloud .nav-container {
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 800px) {
+  .theme-cloud .nav-container {
+    font-size: calc(14 / var(--rem-base) * 1rem);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .theme-cloud .nav-container {
+    font-size: calc(14 / var(--rem-base) * 1rem);
+  }
+}
+
+.theme-cloud .nav-menu {
+  /* side padding insets the row pills from the panel edges */
+  padding: 0 0.5rem 0.5rem;
+  color: var(--nav-item-font-color);
+}
+
+.theme-cloud .nav-menu h3.title {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem 0.375rem;
+}
+
+/* link and toggle share one box, so the row highlight is a single shape */
+.theme-cloud .nav-row {
+  display: flex;
+  align-items: stretch;
+  border-radius: var(--nav-item-radius);
+}
+
+.theme-cloud .nav-row + .nav-list {
+  padding-bottom: 0.125rem;
+}
+
+.theme-cloud .nav-item-toggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  /* the svg is a chevron-down, so collapsed points it right */
+  transform: rotate(-90deg);
+}
+
+.theme-cloud .nav-item-toggle svg {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.theme-cloud .nav-item.is-active > .nav-row > .nav-item-toggle {
+  transform: rotate(0);
+}
+
+/* depth 1 aligns with the component title; each level indents 0.75rem */
+.theme-cloud .nav-item[data-depth="1"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="1"] > .nav-row > .nav-text { padding-left: 0.75rem; }
+.theme-cloud .nav-item[data-depth="2"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="2"] > .nav-row > .nav-text { padding-left: 1.5rem; }
+.theme-cloud .nav-item[data-depth="3"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="3"] > .nav-row > .nav-text { padding-left: 2.25rem; }
+.theme-cloud .nav-item[data-depth="4"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="4"] > .nav-row > .nav-text { padding-left: 3rem; }
+.theme-cloud .nav-item[data-depth="5"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="5"] > .nav-row > .nav-text { padding-left: 3.75rem; }
+.theme-cloud .nav-item[data-depth="6"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="6"] > .nav-row > .nav-text { padding-left: 4.5rem; }
+.theme-cloud .nav-item[data-depth="7"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="7"] > .nav-row > .nav-text { padding-left: 5.25rem; }
+.theme-cloud .nav-item[data-depth="8"] > .nav-row > .nav-link,
+.theme-cloud .nav-item[data-depth="8"] > .nav-row > .nav-text { padding-left: 6rem; }
+
+.theme-cloud .nav-link,
+.theme-cloud .nav-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-right: 0.5rem;
+}
+
+/* the row carries the hover/current highlight, so the link itself stays clear */
+.theme-cloud .nav-link:hover,
+.theme-cloud .nav-text:hover {
+  background: transparent;
+}
+
+.theme-cloud .nav-item:not(.is-current-page) > .nav-row:hover {
+  background: var(--navbar-menu_hover-background);
+}
+
+/* the link and toggle inherit this colour, so the whole row shifts together */
+.theme-cloud .is-current-page > .nav-row {
+  color: #7a4812;
+  background-color: rgba(247, 129, 22, 0.15);
+}
+
+.theme-cloud .is-current-page > .nav-row > .nav-link,
+.theme-cloud .is-current-page > .nav-row > .nav-text {
+  font-weight: var(--body-font-weight-bold);
+}
+
+.theme-cloud .nav-panel-explore .context {
+  font-size: calc(14 / var(--rem-base) * 1rem);
+}
+
+/* ---- Doc base restyle (scoped; the shared doc.css stays neutral) ---- */
+.theme-cloud .doc h1,
+.theme-cloud .doc h2,
+.theme-cloud .doc h3,
+.theme-cloud .doc h4,
+.theme-cloud .doc h5,
+.theme-cloud .doc h6 {
+  font-family: var(--heading-font-family);
+  line-height: 1.25;
+}
+
+.theme-cloud .doc > h1.page:first-child {
+  font-size: calc(32 / var(--rem-base) * 1rem);
+  margin: 1.5rem 0;
+}
+
+/* title on the left, page-actions pinned to the right */
+.theme-cloud .doc > .page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.theme-cloud .doc > .page-header > h1.page {
+  font-size: calc(32 / var(--rem-base) * 1rem);
+  margin: 0;
+}
+
+.theme-cloud .doc h1.sect0 {
+  font-size: calc(32 / var(--rem-base) * 1rem);
+}
+
+/* neutral doc.css gives h2 a full-width divider; the cloud look drops it */
+.theme-cloud .doc h2 {
+  border-bottom: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  font-size: calc(24 / var(--rem-base) * 1rem);
+}
+
+.theme-cloud .doc h3 {
+  font-size: calc(20 / var(--rem-base) * 1rem);
+  font-weight: var(--heading-font-weight);
+}
+
+.theme-cloud .doc h4 {
+  font-size: calc(18 / var(--rem-base) * 1rem);
+  font-weight: var(--heading-font-weight);
+}
+
+.theme-cloud .doc h5 {
+  font-size: 1rem;
+}
+
+.theme-cloud .doc h6 {
+  font-size: calc(14 / var(--rem-base) * 1rem);
+}
+
+@media screen and (min-width: 769px) {
+  .theme-cloud .doc > .page-header:first-child {
+    margin-top: 2.5rem;
+  }
+}
+
+.theme-cloud .page-header + aside.toc.embedded {
+  margin-top: -0.5rem;
+}
+
+.theme-cloud .doc p code,
+.theme-cloud .doc thead code {
+  font-size: calc(14 / var(--rem-base) * 1rem);
+}
+
+.theme-cloud .doc pre {
+  font-size: calc(14 / var(--rem-base) * 1rem);
+}
+
+.theme-cloud .doc .admonitionblock .paragraph {
+  margin: 0;
+}
+
+/* get-started cards: base structure (refined further just below) */
+.theme-cloud .doc table.start-cards {
+  border-collapse: separate;
+  border-spacing: 0.75rem;
+  margin: 1.25rem 0 0;
+  width: 100%;
+}
+
+.theme-cloud .doc table.start-cards colgroup col {
+  width: auto;
+}
+
+.theme-cloud .doc table.start-cards td {
+  /* anchors the title link's overlay, which makes the whole card clickable */
+  position: relative;
+  border: 1px solid var(--color-smoke-90);
+  border-radius: 0.5rem;
+  background: var(--color-white);
+  box-shadow: none;
+  padding: 1.25rem 1.35rem;
+  vertical-align: top;
+  transition: border-color 0.15s ease;
+}
+
+.theme-cloud .doc table.start-cards th,
+.theme-cloud .doc table.start-cards td {
+  border-top: 1px solid var(--color-smoke-90);
+  border-bottom: 1px solid var(--color-smoke-90);
+}
+
+/* title on the left, arrow pinned to the right edge */
+.theme-cloud .doc table.start-cards td > p.tableblock:first-child {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-cloud .doc table.start-cards td > p.tableblock:first-child::after {
+  content: "\2192";
+  flex: none;
+  font-weight: 500;
+  color: var(--link-font-color);
+}
+
+.theme-cloud .doc table.start-cards td:hover > p.tableblock:first-child::after {
+  color: var(--link_hover-font-color);
+}
+
+.theme-cloud .doc table.start-cards td > p.tableblock:first-child a {
+  font-weight: 600;
+}
+
+/* stretches the link over the card so a click anywhere follows it */
+.theme-cloud .doc table.start-cards td > p.tableblock:first-child a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.theme-cloud .doc table.start-cards td > p.tableblock:not(:first-child) {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 767px) {
+  .theme-cloud .doc table.start-cards,
+  .theme-cloud .doc table.start-cards tr,
+  .theme-cloud .doc table.start-cards td {
+    display: block;
+  }
+
+  .theme-cloud .doc table.start-cards td {
+    margin-bottom: 0.75rem;
+  }
 }
 
 /* ---- Cloud-only content refinements ---- */

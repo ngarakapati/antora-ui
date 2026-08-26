@@ -1,6 +1,9 @@
 ;(function () {
   'use strict'
 
+  // Cloud/Savanna-only enhancement. Other components keep the default video block.
+  if (!document.documentElement.classList.contains('theme-cloud')) return
+
   var forEach = Array.prototype.forEach
   var PLAY_ICON =
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +

@@ -10,17 +10,3 @@
     </div>
   </aside>
 </div>
-{{! runs inline, while the nav is parsed but before first paint, so restored
-    sections are already open rather than popping open once site.js loads }}
-<script>
-;(function () {
-  try {
-    var open = JSON.parse(window.sessionStorage.getItem('nav-open-sections') || '[]')
-    if (!open.length) return
-    var items = document.querySelectorAll('.nav-container [data-nav-key]')
-    for (var i = 0; i < items.length; i++) {
-      if (open.indexOf(items[i].getAttribute('data-nav-key')) !== -1) items[i].classList.add('is-active')
-    }
-  } catch (e) {}
-})()
-</script>

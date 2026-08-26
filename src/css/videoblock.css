@@ -1,11 +1,11 @@
-.doc .videoblock {
+.theme-cloud .doc .videoblock {
   margin: 1.75rem auto 0;
   width: 100%;
   max-width: 100%;
 }
 
 /* caption sits above the player; keep it quiet so the video stays the focus */
-.doc .videoblock > .title {
+.theme-cloud .doc .videoblock > .title {
   margin-bottom: 0.6rem;
   color: var(--caption-font-color);
   font-size: calc(15 / var(--rem-base) * 1rem);
@@ -15,7 +15,7 @@
   text-align: left;
 }
 
-.doc .videoblock > .content {
+.theme-cloud .doc .videoblock > .content {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--panel-border-color);
@@ -25,7 +25,7 @@
   line-height: 0;
 }
 
-.doc .videoblock video {
+.theme-cloud .doc .videoblock video {
   display: block;
   width: 100%;
   height: auto;
@@ -33,16 +33,16 @@
 }
 
 /* drop the browser's default center play button; we render our own */
-.doc .videoblock video::-webkit-media-controls-overlay-play-button {
+.theme-cloud .doc .videoblock video::-webkit-media-controls-overlay-play-button {
   display: none;
 }
 
-.doc .videoblock video::-webkit-media-controls-start-playback-button {
+.theme-cloud .doc .videoblock video::-webkit-media-controls-start-playback-button {
   display: none;
 }
 
 /* full-bleed hit target that carries the scrim + centered play control */
-.doc .videoblock .video-play-overlay {
+.theme-cloud .doc .videoblock .video-play-overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -59,7 +59,7 @@
   appearance: none;
 }
 
-.doc .videoblock .video-play-icon {
+.theme-cloud .doc .videoblock .video-play-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,36 +72,36 @@
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.doc .videoblock .video-play-icon svg {
+.theme-cloud .doc .videoblock .video-play-icon svg {
   width: calc(30 / var(--rem-base) * 1rem);
   height: calc(30 / var(--rem-base) * 1rem);
   /* nudge the triangle to feel optically centered in the circle */
   margin-left: 0.18rem;
 }
 
-.doc .videoblock .video-play-overlay:hover .video-play-icon,
-.doc .videoblock .video-play-overlay:focus-visible .video-play-icon {
+.theme-cloud .doc .videoblock .video-play-overlay:hover .video-play-icon,
+.theme-cloud .doc .videoblock .video-play-overlay:focus-visible .video-play-icon {
   transform: scale(1.08);
   background: var(--color-white);
 }
 
-.doc .videoblock .video-play-overlay:focus-visible {
+.theme-cloud .doc .videoblock .video-play-overlay:focus-visible {
   outline: none;
 }
 
-.doc .videoblock .video-play-overlay:focus-visible .video-play-icon {
+.theme-cloud .doc .videoblock .video-play-overlay:focus-visible .video-play-icon {
   box-shadow: 0 0 0 3px var(--color-light-orange), 0 6px 18px rgba(0, 0, 0, 0.28);
 }
 
 /* while playing, hand control back to the native player */
-.doc .videoblock .content.is-playing .video-play-overlay {
+.theme-cloud .doc .videoblock .content.is-playing .video-play-overlay {
   opacity: 0;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .doc .videoblock .video-play-overlay,
-  .doc .videoblock .video-play-icon {
+  .theme-cloud .doc .videoblock .video-play-overlay,
+  .theme-cloud .doc .videoblock .video-play-icon {
     transition: none;
   }
 }
