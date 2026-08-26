@@ -49,7 +49,23 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # ISOLATION GUARANTEE: other products consume the shared
+          # build/ui-bundle.zip, which must NEVER carry the cloud theme.
+          # gulp rebuilt a themed ui-bundle.zip in the working tree, so restore
+          # the committed (neutral) version before staging anything.
+          git checkout -- build/ui-bundle.zip
+
+          # Stage ONLY the cloud bundle, by explicit path.
           git add --force build/ui-bundle-cloud.zip
+
+          # Tripwire: fail loudly if the shared bundle somehow got staged, so a
+          # future edit to this workflow can never leak the cloud theme.
+          if ! git diff --cached --quiet -- build/ui-bundle.zip; then
+            echo "ERROR: build/ui-bundle.zip changed; refusing to publish the cloud theme to the shared bundle." >&2
+            exit 1
+          fi
+
           if git diff --cached --quiet; then
             echo "Cloud bundle unchanged; nothing to commit."
           else
