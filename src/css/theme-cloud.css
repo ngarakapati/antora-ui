@@ -1,3 +1,7 @@
+@import "typeface-docs.css";
+@import "page-actions.css";
+@import "videoblock.css";
+
 /*
  * Cloud-family theme (TigerGraph Savanna + TigerGraph Cloud Classic).
  * Applied only when the page has html/body.theme-cloud.

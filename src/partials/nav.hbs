@@ -4,7 +4,7 @@
 {{> nav-menu}}
 {{!-- Cross-product switcher. Redundant with the header Products menu; hide for
      Savanna / Classic. Other products keep the explore drawer. --}}
-{{#unless (or (eq page.component.name 'savanna') (eq page.component.name 'cloud'))}}
+{{#unless (is-cloud-theme page)}}
 {{> nav-explore}}
 {{/unless}}
     </div>

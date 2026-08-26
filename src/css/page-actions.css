@@ -1,5 +1,5 @@
-/* sizing comes from the --page-actions-* scale in vars.css so the trigger and menu stay in step */
-.page-actions {
+/* Cloud/Savanna page-actions. Tokens live on html.theme-cloud in theme-cloud.css. */
+.theme-cloud .page-actions {
   position: relative;
   display: flex;
   align-items: center;
@@ -8,7 +8,7 @@
   margin-top: 0.35rem;
 }
 
-.page-actions-control {
+.theme-cloud .page-actions-control {
   display: inline-flex;
   align-items: stretch;
   border: 1px solid var(--panel-border-color);
@@ -17,8 +17,8 @@
   overflow: hidden;
 }
 
-.page-actions-copy,
-.page-actions-toggle {
+.theme-cloud .page-actions-copy,
+.theme-cloud .page-actions-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -33,40 +33,40 @@
   cursor: pointer;
 }
 
-.page-actions-copy {
+.theme-cloud .page-actions-copy {
   padding: 0.45rem 0.7rem;
 }
 
-.page-actions-toggle {
+.theme-cloud .page-actions-toggle {
   padding: 0.45rem 0.5rem;
   border-left: 1px solid var(--panel-border-color);
 }
 
-.page-actions-copy:hover,
-.page-actions-toggle:hover,
-.page-actions-copy:focus-visible,
-.page-actions-toggle:focus-visible,
-.page-actions.is-active .page-actions-toggle {
+.theme-cloud .page-actions-copy:hover,
+.theme-cloud .page-actions-toggle:hover,
+.theme-cloud .page-actions-copy:focus-visible,
+.theme-cloud .page-actions-toggle:focus-visible,
+.theme-cloud .page-actions.is-active .page-actions-toggle {
   background: var(--color-smoke-50);
   outline: none;
 }
 
-.page-actions-icon,
-.page-actions-chevron {
+.theme-cloud .page-actions-icon,
+.theme-cloud .page-actions-chevron {
   width: var(--page-actions-icon-size);
   height: var(--page-actions-icon-size);
   flex: none;
 }
 
-.page-actions-chevron {
+.theme-cloud .page-actions-chevron {
   transition: transform 0.15s ease;
 }
 
-.page-actions.is-active .page-actions-chevron {
+.theme-cloud .page-actions.is-active .page-actions-chevron {
   transform: rotate(180deg);
 }
 
-.page-actions-menu {
+.theme-cloud .page-actions-menu {
   position: absolute;
   top: calc(100% + 0.4rem);
   right: 0;
@@ -79,11 +79,11 @@
   box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(0, 0, 0, 0.1);
 }
 
-.page-actions-menu[hidden] {
+.theme-cloud .page-actions-menu[hidden] {
   display: none;
 }
 
-.page-actions-item {
+.theme-cloud .page-actions-item {
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -101,19 +101,19 @@
 }
 
 /* the control lives inside article.doc, so opt out of the doc link styling */
-.doc .page-actions-item,
-.doc .page-actions-item:hover {
+.theme-cloud .doc .page-actions-item,
+.theme-cloud .doc .page-actions-item:hover {
   color: var(--doc-font-color);
   text-decoration: none;
 }
 
-.page-actions-item:hover,
-.page-actions-item:focus-visible {
+.theme-cloud .page-actions-item:hover,
+.theme-cloud .page-actions-item:focus-visible {
   background: var(--color-smoke-50);
   outline: none;
 }
 
-.page-actions-chip {
+.theme-cloud .page-actions-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -126,19 +126,19 @@
   background: var(--color-white);
 }
 
-.page-actions-chip svg {
+.theme-cloud .page-actions-chip svg {
   width: var(--page-actions-icon-size);
   height: var(--page-actions-icon-size);
 }
 
-.page-actions-text {
+.theme-cloud .page-actions-text {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
   min-width: 0;
 }
 
-.page-actions-title {
+.theme-cloud .page-actions-title {
   display: inline-flex;
   align-items: center;
   gap: 0.25em;
@@ -147,7 +147,7 @@
   white-space: nowrap;
 }
 
-.page-actions-external {
+.theme-cloud .page-actions-external {
   /* display:block kills the inline-svg baseline gap that made ↗ look like a superscript */
   display: block;
   width: 0.75em;
@@ -159,7 +159,7 @@
   margin-block-start: 0.08em;
 }
 
-.page-actions-hint {
+.theme-cloud .page-actions-hint {
   font-size: var(--page-actions-hint-font-size);
   color: var(--caption-font-color);
   line-height: 1.35;
@@ -167,11 +167,11 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .page-actions-menu {
+  .theme-cloud .page-actions-menu {
     min-width: var(--page-actions-menu-width--mobile);
   }
 
-  .page-actions-copy-label {
+  .theme-cloud .page-actions-copy-label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -183,7 +183,7 @@
     border: 0;
   }
 
-  .page-actions-copy {
+  .theme-cloud .page-actions-copy {
     padding: 0.45rem;
   }
 }
