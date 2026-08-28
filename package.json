@@ -10,6 +10,9 @@
   "engines": {
     "node": ">= 10.17.0"
   },
+  "scripts": {
+    "test": "node test/helpers/md-url-test.js"
+  },
   "browserslist": [
     "last 2 versions"
   ],
