@@ -1,6 +1,8 @@
 ;(function () {
   'use strict'
 
+  // Antora default tabset (.tabset / .tab-pane / .is-active).
+  // @asciidoctor/tabs markup is handled by 10-asciidoctor-tabs.js.
   var hash = window.location.hash
   find('.tabset').forEach(function (tabset) {
     var active
