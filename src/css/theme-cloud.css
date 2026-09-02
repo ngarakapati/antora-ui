@@ -564,6 +564,100 @@ body.theme-cloud {
   }
 }
 
+/*
+ * Production doc-site still compiles [tabs] with tabs-block.js
+ * (.tabset / .tab-pane / .is-active). Savanna preview used
+ * @asciidoctor/tabs (.tablist / .tabpanel). Restyle the Antora
+ * markup to the same underline tabs so GSQL/Server stay on the
+ * default boxed look.
+ */
+.theme-cloud .doc .tabset {
+  margin-bottom: 1.5rem;
+}
+
+.theme-cloud .doc .tabset .tabs ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--panel-border-color);
+}
+
+.theme-cloud .doc .tabset .tabs li {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  font-size: calc(15 / var(--rem-base) * 1rem);
+  font-weight: 500;
+  height: auto;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 0.7rem;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.theme-cloud .doc .tabset .tabs li p {
+  line-height: inherit;
+  margin: 0;
+}
+
+.theme-cloud .doc .tabset .tabs li:hover {
+  color: var(--color-text-strong);
+}
+
+.theme-cloud .doc .tabset .tabs li::after {
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+}
+
+.theme-cloud .doc .tabset.is-loading .tabs li:not(:first-child),
+.theme-cloud .doc .tabset:not(.is-loading) .tabs li:not(.is-active) {
+  background-color: transparent;
+  color: var(--color-text-muted);
+}
+
+.theme-cloud .doc .tabset.is-loading .tabs li:first-child,
+.theme-cloud .doc .tabset:not(.is-loading) .tabs li.is-active {
+  background: transparent;
+  color: var(--color-text-strong);
+  font-weight: 600;
+}
+
+.theme-cloud .doc .tabset.is-loading .tabs li:first-child::after,
+.theme-cloud .doc .tabset .tabs li.is-active::after {
+  background-color: var(--color-orange);
+  bottom: -1px;
+  height: 2px;
+}
+
+.theme-cloud .doc .tabset > .content {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 1.5rem 0 0;
+}
+
+.theme-cloud .doc .tabset .tab-pane > :first-child {
+  margin-top: 0;
+}
+
+.theme-cloud .doc .tabset .tab-pane > :last-child {
+  margin-bottom: 0;
+}
+
 /* ---- Home icon (masked Lucide-style, inherits breadcrumb colour) ---- */
 
 .theme-cloud .home-link {
