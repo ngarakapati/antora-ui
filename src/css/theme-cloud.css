@@ -9,9 +9,9 @@
  */
 
 html.theme-cloud {
-  font-size: 0.9em; /* ~14.4px, matches viewing the 16px base at 90% zoom */
-  --body-font-size: 0.9em;
-  --body-font-size--desktop: 0.9em;
+  font-size: 0.95em; /* ~15.2px; 95% of the 16px base */
+  --body-font-size: 0.95em;
+  --body-font-size--desktop: 0.95em;
 
   /* Cloud/Savanna design tokens. These previously lived in the shared :root
      (vars.css), which leaked the theme to every product. They now live here,
@@ -92,10 +92,10 @@ html.theme-cloud {
   --admonition-line-height: 1.5;
 }
 
-/* Shared top header: undo the 0.9 root scale so logo, search, and CTAs match
+/* Shared top header: undo the 0.95 root scale so logo, search, and CTAs match
    the rest of docs.tigergraph.com. */
 .theme-cloud .navbar {
-  font-size: calc(16 / var(--rem-base) * 1rem / 0.9);
+  font-size: calc(16 / var(--rem-base) * 1rem / 0.95);
   height: 63px;
 }
 
@@ -104,7 +104,7 @@ html.theme-cloud {
 }
 
 /* The navbar is pinned to 63px, but everything below it is offset by the
-   inlined rem value (56.7px at the 0.9 scale), which tucked the toolbar and
+   inlined rem value from :root, which tucked the toolbar and
    nav under the navbar border. Re-anchor them to the real navbar height. */
 body.theme-cloud {
   padding-top: 63px;
@@ -144,18 +144,18 @@ body.theme-cloud {
   height: 100%;
 }
 
-/* Shared footer: undo rem shrink from the 0.9 root scale. Most footer
+/* Shared footer: undo rem shrink from the 0.95 root scale. Most footer
    rules already use px; only rem-based bits need restoring. */
 .theme-cloud .footer__logo {
-  font-size: calc(1.5rem / 0.9);
+  font-size: calc(1.5rem / 0.95);
 }
 
 .theme-cloud .footer__btn {
-  font-size: calc(1rem / 0.9);
+  font-size: calc(1rem / 0.95);
 }
 
 .theme-cloud .legal {
-  padding-top: calc(1rem / 0.9);
+  padding-top: calc(1rem / 0.95);
 }
 
 /* ---- Navigation tree (scoped; the shared nav.css stays neutral) ----
