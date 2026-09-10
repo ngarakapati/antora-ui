@@ -18,6 +18,8 @@ on:
 permissions:
   contents: write
 
+# PRs: cancel superseded runs. Main: queue so two merges cannot publish
+# ui-bundle.zip at the same time (the zip is a binary and cannot rebase).
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -36,7 +38,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit
 
       - name: Build UI bundle
         run: npx gulp bundle
@@ -48,22 +50,46 @@ jobs:
           path: build/ui-bundle.zip
           if-no-files-found: error
 
+      # Do not rebase ui-bundle.zip: it is binary, so a concurrent main
+      # commit that also touches the zip would conflict. Fetch latest main,
+      # rebuild if the branch moved, then commit and retry the push.
       - name: Publish bundle to main
         id: publish
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add build/ui-bundle.zip
-          if git diff --cached --quiet; then
-            echo "UI bundle unchanged; nothing to commit."
-            echo "published=false" >> "$GITHUB_OUTPUT"
-          else
+          echo "published=false" >> "$GITHUB_OUTPUT"
+
+          git fetch origin main
+
+          for attempt in 1 2 3; do
+            if [ "$attempt" -gt 1 ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              echo "Rebuilding the bundle from origin/main (attempt ${attempt})"
+              git reset --hard origin/main
+              npm ci --no-audit
+              npx gulp bundle
+            fi
+
+            git add build/ui-bundle.zip
+            if git diff --cached --quiet; then
+              echo "UI bundle unchanged; nothing to commit."
+              exit 0
+            fi
+
             git commit -m "build(ui): rebuild UI bundle from source [skip ci]"
-            git pull --rebase origin main
-            git push origin HEAD:main
-            echo "published=true" >> "$GITHUB_OUTPUT"
-          fi
+            if git push origin HEAD:main; then
+              echo "published=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "Push rejected (attempt ${attempt}); retrying against latest main"
+            git fetch origin main
+          done
+
+          echo "Failed to publish ui-bundle.zip after retries" >&2
+          exit 1
 
       # One Netlify deploy per UI change: only after a new zip is on main.
       # Do not ping for PRs, the [skip ci] zip commit, or github-actions[bot]
