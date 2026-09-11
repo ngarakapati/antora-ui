@@ -31,9 +31,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # Node 17+ dropped the "./" package-exports fallback that postcss 8.1
-      # and gulp-stylelint 13 still use (postcss/lib/input). Node 16 matches
-      # this UI stack without upgrading the CSS linter.
+      # Node 17+ dropped PostCSS 8.1's "./" exports fallback, which broke
+      # gulp-stylelint 13 / postcss-syntax. CSS lint now uses stylelint 14.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
